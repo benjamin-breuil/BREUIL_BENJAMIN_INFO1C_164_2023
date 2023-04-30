@@ -19,6 +19,15 @@
 						{% endfor %}
 					</p>
 				</div>
+                <div class="form-group">
+					<p>
+						{{ form.description.label }}<br>
+						{{ form.description(size=32) }}<br>
+						{% for error in form.description.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+				</div>
 				{{ form.submit(class="btn btn-primary") }}
 			</form>
 		</div>

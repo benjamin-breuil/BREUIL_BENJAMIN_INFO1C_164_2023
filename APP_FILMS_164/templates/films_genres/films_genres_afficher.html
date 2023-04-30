@@ -14,16 +14,7 @@
 						  Nom
 						</th>
 						<th class="" >
-						  Durée
-						</th>
-						<th class="" >
-						  Date de sortie
-						</th>
-						<th class="" >
 						  Description
-						</th>
-						<th class="" >
-						  Affiche
 						</th>
 					</tr>
 				</thead>
@@ -32,22 +23,13 @@
 			<tbody>
 				<tr>
 					  <th class="align-middle">
-						  {{ row.id_film }}
+						  {{ row.id_technique }}
 					  </th>
 					  <th class="align-middle">
-						{{ row.nom_film }}
+						{{ row.name }}
 					  </th>
 					  <th class="align-middle">
-						{{ row.duree_film|default("", True) }}
-					  </th>
-					  <th class="align-middle">
-						{{ row.date_sortie_film|default("", True) }}
-					  </th>
-					  <th class="align-middle">
-						{{ row.description_film|default("", True) }}
-					  </th>
-					  <th class="align-middle">
-						<img class="img" src={{ row.cover_link_film|default(None, True) }} style="border: 0;display:block; width:150px; max-height:auto;"  alt = "image masquée FFP8 (in COVID-19 Memory) (absente) mod 164">
+						{{ row.description|default("", True) }}
 					  </th>
 					  <th class="align-middle">
 						<a class="btn btn-primary" href="{{ url_for('film_add_wtf') }}" role="button">Ajouter</a>
@@ -63,7 +45,7 @@
 							<a class="btn btn-warning" href="{{ url_for('edit_genre_film_selected', id_film_genres_edit_html=row.id_film) }}" role="button">Modifier</a>
 						</td>
 						<td class="align-middle" colspan="5">
-							{{ row.GenresFilms|default("PAS DE GENRES", True) }}
+							{{ row.GenresFilms|default("PAS DE NIVEAUX", True) }}
 						</td>
 					</tr>
 				</tr>
@@ -72,7 +54,7 @@
 				<tbody>
 					<tr>
 						<td>
-							Aucun film.
+							Aucunne technique.
 						</td>
 						<td>
 							<a class="btn btn-primary" href="{{ url_for('avertissement_sympa_pour_geeks') }}" role="button">Add</a>
