@@ -37,10 +37,12 @@ def film_add_wtf():
             if form_add_film.validate_on_submit():
                 nom_film_add = form_add_film.nom_film_add_wtf.data
 
-                valeurs_insertion_dictionnaire = {"value_nom_film": nom_film_add}
+                desc_technique_add = form_add_film.description_technique.data
+
+                valeurs_insertion_dictionnaire = {"value_nom_film": nom_film_add, "valeur_desc_tech": desc_technique_add}
                 print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
 
-                strsql_insert_film = """INSERT INTO t_film (id_film,nom_film) VALUES (NULL,%(value_nom_film)s) """
+                strsql_insert_film = """INSERT INTO t_technique (id_technique,name, description) VALUES (NULL,%(value_nom_film)s, %(valeur_desc_tech)s) """
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(strsql_insert_film, valeurs_insertion_dictionnaire)
 

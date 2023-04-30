@@ -24,8 +24,15 @@ class FormWTFAddFilm(FlaskForm):
                                                                               "d'espace à double, de double "
                                                                               "apostrophe, de double trait union")
                                                                ])
+    description_technique = StringField("Description technique ", validators=[Length(min=2, max=2000, message="min 2 max 20"),
+                                                               Regexp(nom_film_regexp,
+                                                                      message="Pas de chiffres, de caractères "
+                                                                              "spéciaux, "
+                                                                              "d'espace à double, de double "
+                                                                              "apostrophe, de double trait union")
+                                                               ])
 
-    submit = SubmitField("Enregistrer film")
+    submit = SubmitField("Enregistrer la technique")
 
 
 class FormWTFUpdateFilm(FlaskForm):

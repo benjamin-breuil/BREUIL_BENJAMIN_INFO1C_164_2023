@@ -18,7 +18,15 @@
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>
-					Voilà c'est juste pour vous montrer l'ossature du projet je n'ai pas tout fait...
+				</div>
+                <div class="form-group">
+					<p>
+						{{ form_add_film.description_technique.label }}<br>
+						{{ form_add_film.description_technique(size=32) }}<br>
+						{% for error in form_add_film.description_technique.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
 				</div>
 				{{ form_add_film.submit(class="btn btn-primary") }}
 			</form>
