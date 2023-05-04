@@ -43,11 +43,11 @@ def genres_afficher(order_by, id_genre_sel):
                     # donc, je précise les champs à afficher
                     # Constitution d'un dictionnaire pour associer l'id du genre sélectionné avec un nom de variable
                     valeur_id_genre_selected_dictionnaire = {"value_id_genre_selected": id_genre_sel}
-                    strsql_genres_afficher = """SELECT id_niveau, name  FROM t_niveau WHERE id_niveau = %(value_id_genre_selected)s"""
+                    strsql_genres_afficher = """SELECT id_niveau, name_niveau  FROM t_niveau WHERE id_niveau = %(value_id_genre_selected)s"""
 
                     mc_afficher.execute(strsql_genres_afficher, valeur_id_genre_selected_dictionnaire)
                 else:
-                    strsql_genres_afficher = """SELECT id_niveau, name  FROM t_niveau ORDER BY id_niveau DESC"""
+                    strsql_genres_afficher = """SELECT id_niveau, name_niveau  FROM t_niveau ORDER BY id_niveau DESC"""
 
                     mc_afficher.execute(strsql_genres_afficher)
 
@@ -109,7 +109,7 @@ def genres_ajouter_wtf():
 
 
 
-                strsql_insert_genre = """INSERT INTO t_niveau (id_niveau,name) VALUES (NULL,%(value_intitule_genre)s)"""
+                strsql_insert_genre = """INSERT INTO t_niveau (id_niveau,name_niveau) VALUES (NULL,%(value_intitule_genre)s)"""
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(strsql_insert_genre, valeurs_insertion_dictionnaire)
 
@@ -168,7 +168,7 @@ def genre_update_wtf():
                                           }
             print("valeur_update_dictionnaire ", valeur_update_dictionnaire)
 
-            str_sql_update_intitulegenre = """UPDATE t_niveau SET name = %(value_name_genre)s WHERE id_niveau = %(value_id_genre)s"""
+            str_sql_update_intitulegenre = """UPDATE t_niveau SET name_niveau = %(value_name_genre)s WHERE id_niveau = %(value_id_genre)s"""
             with DBconnection() as mconn_bd:
                 mconn_bd.execute(str_sql_update_intitulegenre, valeur_update_dictionnaire)
 
@@ -180,7 +180,7 @@ def genre_update_wtf():
             return redirect(url_for('genres_afficher', order_by="ASC", id_genre_sel=id_genre_update))
         elif request.method == "GET":
             # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
-            str_sql_id_genre = "SELECT id_niveau, name FROM t_niveau " \
+            str_sql_id_genre = "SELECT id_niveau, name_niveau FROM t_niveau " \
                                "WHERE id_niveau = %(value_id_genre)s"
             valeur_select_dictionnaire = {"value_id_genre": id_genre_update}
             print(valeur_select_dictionnaire)
@@ -191,7 +191,7 @@ def genre_update_wtf():
 
 
             # Afficher la valeur sélectionnée dans les champs du formulaire "genre_update_wtf.html"
-            form_update.nom_genre_update_wtf.data = data_nom_genre["name"]
+            form_update.nom_genre_update_wtf.data = data_nom_genre["name_niveau"]
 
     except Exception as Exception_genre_update_wtf:
         raise ExceptionGenreUpdateWtf(f"fichier : {Path(__file__).name}  ;  "

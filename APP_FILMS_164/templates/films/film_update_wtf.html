@@ -19,30 +19,9 @@
 						{% endfor %}
 					</p>
 					<p>
-						{{ form_update_film.duree_film_update_wtf.label }}<br>
-						{{ form_update_film.duree_film_update_wtf(size=32) }}<br>
-						{% for error in form_update_film.duree_film_update_wtf.errors %}
-						<span style="color: red;">[{{ error }}]</span>
-						{% endfor %}
-					</p>
-					<p>
-						{{ form_update_film.description_film_update_wtf.label }}<br>
-						{{ form_update_film.description_film_update_wtf(cols=50, rows=10) }}<br>
-						{% for error in form_update_film.description_film_update_wtf.errors %}
-						<span style="color: red;">[{{ error }}]</span>
-						{% endfor %}
-					</p>
-					<p>
-						{{ form_update_film.cover_link_film_update_wtf.label }}<br>
-						{{ form_update_film.cover_link_film_update_wtf(cols=100, rows=10) }}<br>
-						{% for error in form_update_film.cover_link_film_update_wtf.errors %}
-						<span style="color: red;">[{{ error }}]</span>
-						{% endfor %}
-					</p>
-					<p>
-						{{ form_update_film.datesortie_film_update_wtf.label }}<br>
-						{{ form_update_film.datesortie_film_update_wtf(size=12) }}<br>
-						{% for error in form_update_film.datesortie_film_update_wtf.errors %}
+						{{ form_update_film.desc_technique_update.label }}<br>
+						{{ form_update_film.desc_technique_update(size=32) }}<br>
+						{% for error in form_update_film.desc_technique_update.errors %}
 						<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>
