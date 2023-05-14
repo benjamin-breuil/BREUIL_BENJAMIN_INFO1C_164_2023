@@ -95,7 +95,7 @@ def edit_genre_film_selected():
                 strsql_genres_afficher = """SELECT id_niveau, name_niveau FROM t_niveau ORDER BY id_niveau ASC"""
                 mc_afficher.execute(strsql_genres_afficher)
             data_genres_all = mc_afficher.fetchall()
-            print("dans edit_genre_film_selected ---> data_genres_all", data_genres_all)
+            print(" dans edit_genre_film_selected ---> data_genres_all", data_genres_all)
 
             # Récupère la valeur de "id_film" du formulaire html "films_genres_afficher.html"
             # l'utilisateur clique sur le bouton "Modifier" et on récupère la valeur de "id_film"

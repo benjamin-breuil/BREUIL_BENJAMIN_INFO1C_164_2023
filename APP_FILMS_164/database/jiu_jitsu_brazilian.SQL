@@ -16,10 +16,12 @@
 
 
 -- Listage de la structure de la base pour jiu_jitsu_brazilian
+DROP DATABASE IF EXISTS `jiu_jitsu_brazilian`;
 CREATE DATABASE IF NOT EXISTS `jiu_jitsu_brazilian` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `jiu_jitsu_brazilian`;
 
 -- Listage de la structure de table jiu_jitsu_brazilian. t_adresse
+DROP TABLE IF EXISTS `t_adresse`;
 CREATE TABLE IF NOT EXISTS `t_adresse` (
   `id_adresse` int NOT NULL AUTO_INCREMENT,
   `npa` varchar(10) DEFAULT NULL,
@@ -35,6 +37,7 @@ INSERT INTO `t_adresse` (`id_adresse`, `npa`, `rue`, `numero_rue`, `ville`, `pay
 	(1, '1200', 'Rue de la Gare', '15', 'Genève', 'Suisse');
 
 -- Listage de la structure de table jiu_jitsu_brazilian. t_avoir_niveau_personne
+DROP TABLE IF EXISTS `t_avoir_niveau_personne`;
 CREATE TABLE IF NOT EXISTS `t_avoir_niveau_personne` (
   `id_avoir_niveau_personne` int NOT NULL AUTO_INCREMENT,
   `fk_niveau` int DEFAULT NULL,
@@ -49,6 +52,7 @@ CREATE TABLE IF NOT EXISTS `t_avoir_niveau_personne` (
 -- Listage des données de la table jiu_jitsu_brazilian.t_avoir_niveau_personne : ~0 rows (environ)
 
 -- Listage de la structure de table jiu_jitsu_brazilian. t_avoir_niveau_technique_niveau
+DROP TABLE IF EXISTS `t_avoir_niveau_technique_niveau`;
 CREATE TABLE IF NOT EXISTS `t_avoir_niveau_technique_niveau` (
   `id_avoir_niveau_technique_niveau` int NOT NULL AUTO_INCREMENT,
   `fk_niveau` int DEFAULT NULL,
@@ -58,11 +62,15 @@ CREATE TABLE IF NOT EXISTS `t_avoir_niveau_technique_niveau` (
   KEY `fk_technique` (`fk_technique`),
   CONSTRAINT `t_avoir_niveau_technique_niveau_ibfk_1` FOREIGN KEY (`fk_niveau`) REFERENCES `t_niveau` (`id_niveau`),
   CONSTRAINT `t_avoir_niveau_technique_niveau_ibfk_2` FOREIGN KEY (`fk_technique`) REFERENCES `t_technique` (`id_technique`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table jiu_jitsu_brazilian.t_avoir_niveau_technique_niveau : ~0 rows (environ)
+-- Listage des données de la table jiu_jitsu_brazilian.t_avoir_niveau_technique_niveau : ~2 rows (environ)
+INSERT INTO `t_avoir_niveau_technique_niveau` (`id_avoir_niveau_technique_niveau`, `fk_niveau`, `fk_technique`) VALUES
+	(5, 3, 1),
+	(12, 4, 2);
 
 -- Listage de la structure de table jiu_jitsu_brazilian. t_avoir_niveau_technique_personne
+DROP TABLE IF EXISTS `t_avoir_niveau_technique_personne`;
 CREATE TABLE IF NOT EXISTS `t_avoir_niveau_technique_personne` (
   `id_avoir_niveau_technique_personne` int NOT NULL AUTO_INCREMENT,
   `fk_niveau` int DEFAULT NULL,
@@ -74,6 +82,7 @@ CREATE TABLE IF NOT EXISTS `t_avoir_niveau_technique_personne` (
 -- Listage des données de la table jiu_jitsu_brazilian.t_avoir_niveau_technique_personne : ~0 rows (environ)
 
 -- Listage de la structure de table jiu_jitsu_brazilian. t_categories
+DROP TABLE IF EXISTS `t_categories`;
 CREATE TABLE IF NOT EXISTS `t_categories` (
   `id_categories` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
@@ -83,6 +92,7 @@ CREATE TABLE IF NOT EXISTS `t_categories` (
 -- Listage des données de la table jiu_jitsu_brazilian.t_categories : ~0 rows (environ)
 
 -- Listage de la structure de table jiu_jitsu_brazilian. t_echauffement
+DROP TABLE IF EXISTS `t_echauffement`;
 CREATE TABLE IF NOT EXISTS `t_echauffement` (
   `id_echauffement` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
@@ -110,6 +120,7 @@ INSERT INTO `t_echauffement` (`id_echauffement`, `name`, `description`, `temps_m
 	(15, 'Jumping rope', 'Exercice cardiovasculaire pour échauffer le corps et améliorer la coordination', 5);
 
 -- Listage de la structure de table jiu_jitsu_brazilian. t_email
+DROP TABLE IF EXISTS `t_email`;
 CREATE TABLE IF NOT EXISTS `t_email` (
   `id_email` int NOT NULL AUTO_INCREMENT,
   `adresse_email` varchar(255) DEFAULT NULL,
@@ -119,23 +130,23 @@ CREATE TABLE IF NOT EXISTS `t_email` (
 -- Listage des données de la table jiu_jitsu_brazilian.t_email : ~0 rows (environ)
 
 -- Listage de la structure de table jiu_jitsu_brazilian. t_niveau
+DROP TABLE IF EXISTS `t_niveau`;
 CREATE TABLE IF NOT EXISTS `t_niveau` (
   `id_niveau` int NOT NULL AUTO_INCREMENT,
   `name_niveau` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`id_niveau`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table jiu_jitsu_brazilian.t_niveau : ~7 rows (environ)
+-- Listage des données de la table jiu_jitsu_brazilian.t_niveau : ~5 rows (environ)
 INSERT INTO `t_niveau` (`id_niveau`, `name_niveau`) VALUES
 	(1, 'white'),
-	(2, 'blue'),
 	(3, 'purple'),
 	(4, 'brown'),
 	(5, 'black'),
-	(6, 'red'),
-	(7, 'ssssss');
+	(9, 'blue');
 
 -- Listage de la structure de table jiu_jitsu_brazilian. t_num_tel
+DROP TABLE IF EXISTS `t_num_tel`;
 CREATE TABLE IF NOT EXISTS `t_num_tel` (
   `id_num_tel` int NOT NULL AUTO_INCREMENT,
   `num_tel` varchar(100) DEFAULT NULL,
@@ -145,6 +156,7 @@ CREATE TABLE IF NOT EXISTS `t_num_tel` (
 -- Listage des données de la table jiu_jitsu_brazilian.t_num_tel : ~0 rows (environ)
 
 -- Listage de la structure de table jiu_jitsu_brazilian. t_personne
+DROP TABLE IF EXISTS `t_personne`;
 CREATE TABLE IF NOT EXISTS `t_personne` (
   `id_personne` int NOT NULL AUTO_INCREMENT,
   `prenom` varchar(100) DEFAULT NULL,
@@ -159,11 +171,15 @@ CREATE TABLE IF NOT EXISTS `t_personne` (
   CONSTRAINT `t_personne_ibfk_1` FOREIGN KEY (`fk_email`) REFERENCES `t_email` (`id_email`),
   CONSTRAINT `t_personne_ibfk_2` FOREIGN KEY (`fk_num_tel`) REFERENCES `t_num_tel` (`id_num_tel`),
   CONSTRAINT `t_personne_ibfk_3` FOREIGN KEY (`fk_adresse`) REFERENCES `t_adresse` (`id_adresse`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table jiu_jitsu_brazilian.t_personne : ~0 rows (environ)
+-- Listage des données de la table jiu_jitsu_brazilian.t_personne : ~2 rows (environ)
+INSERT INTO `t_personne` (`id_personne`, `prenom`, `nom`, `fk_email`, `fk_num_tel`, `fk_adresse`) VALUES
+	(1, 'Benjamin', 'Breuil', NULL, NULL, NULL),
+	(2, 'Alexandre', 'Breuil', NULL, NULL, NULL);
 
 -- Listage de la structure de table jiu_jitsu_brazilian. t_role
+DROP TABLE IF EXISTS `t_role`;
 CREATE TABLE IF NOT EXISTS `t_role` (
   `id_role` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
@@ -173,12 +189,13 @@ CREATE TABLE IF NOT EXISTS `t_role` (
 -- Listage des données de la table jiu_jitsu_brazilian.t_role : ~0 rows (environ)
 
 -- Listage de la structure de table jiu_jitsu_brazilian. t_technique
+DROP TABLE IF EXISTS `t_technique`;
 CREATE TABLE IF NOT EXISTS `t_technique` (
   `id_technique` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `description` text,
   PRIMARY KEY (`id_technique`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Listage des données de la table jiu_jitsu_brazilian.t_technique : ~18 rows (environ)
 INSERT INTO `t_technique` (`id_technique`, `name`, `description`) VALUES
@@ -202,6 +219,7 @@ INSERT INTO `t_technique` (`id_technique`, `name`, `description`) VALUES
 	(18, 'Side control', 'Le Side control est une position dominante qui consiste à se placer sur le côté de l\'adversaire en bloquant ses bras et ses jambes.');
 
 -- Listage de la structure de table jiu_jitsu_brazilian. t_zone_echauffer
+DROP TABLE IF EXISTS `t_zone_echauffer`;
 CREATE TABLE IF NOT EXISTS `t_zone_echauffer` (
   `id_zone_echauffer` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
