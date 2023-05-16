@@ -43,11 +43,11 @@ def personnes_afficher(order_by, id_genre_sel):
                     # donc, je précise les champs à afficher
                     # Constitution d'un dictionnaire pour associer l'id du genre sélectionné avec un nom de variable
                     valeur_id_genre_selected_dictionnaire = {"value_id_genre_selected": id_genre_sel}
-                    strsql_personnes_afficher = """SELECT id_personne, prenom  FROM t_personne WHERE id_personne = %(value_id_genre_selected)s"""
+                    strsql_personnes_afficher = """SELECT id_personne, prenom, nom, fk_adresse, fk_num_tel, fk_email  FROM t_personne WHERE id_personne = %(value_id_genre_selected)s"""
 
                     mc_afficher.execute(strsql_personnes_afficher, valeur_id_genre_selected_dictionnaire)
                 else:
-                    strsql_personnes_afficher = """SELECT id_personne, prenom  FROM t_personne ORDER BY id_personne DESC"""
+                    strsql_personnes_afficher = """SELECT id_personne, prenom, nom, fk_adresse, fk_num_tel, fk_email  FROM t_personne ORDER BY id_personne DESC"""
 
                     mc_afficher.execute(strsql_personnes_afficher)
 
@@ -95,21 +95,25 @@ def personnes_afficher(order_by, id_genre_sel):
 """
 
 
-@app.route("/genres_ajouter", methods=['GET', 'POST'])
+@app.route("/personnes_ajouter_wtf", methods=['GET', 'POST'])
 def personnes_ajouter_wtf():
     form = FormWTFAjouterGenres()
     if request.method == "POST":
         try:
             if form.validate_on_submit():
                 name_genre_wtf = form.nom_genre_wtf.data
-                name_genre = name_genre_wtf.lower()
+                nom_personne = name_genre_wtf.lower()
 
-                valeurs_insertion_dictionnaire = {"value_intitule_genre": name_genre}
+                prenom_personne_wtf = form.prenom_genre_wtf.data
+                prenom_personne = prenom_personne_wtf.lower()
+
+                valeurs_insertion_dictionnaire = {"value_intitule_personne": nom_personne,
+                                                  "value_prenom_personne": prenom_personne}
                 print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
 
 
 
-                strsql_insert_genre = """INSERT INTO t_niveau (id_niveau,name_niveau) VALUES (NULL,%(value_intitule_genre)s)"""
+                strsql_insert_genre = """INSERT INTO t_personne (id_personne,nom,prenom) VALUES (NULL,%(value_intitule_personne)s,%(value_prenom_personne)s)"""
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(strsql_insert_genre, valeurs_insertion_dictionnaire)
 
@@ -124,7 +128,7 @@ def personnes_ajouter_wtf():
                                             f"{personnes_ajouter_wtf.__name__} ; "
                                             f"{Exception_personnes_ajouter_wtf}")
 
-    return render_template("genres/personnes_ajouter_wtf.html", form=form)
+    return render_template("personnes/personnes_ajouter_wtf.html", form=form)
 
 
 """
@@ -147,8 +151,8 @@ def personnes_ajouter_wtf():
 """
 
 
-@app.route("/genre_update", methods=['GET', 'POST'])
-def personne_updater_wtf():
+@app.route("/personne_update_wtf", methods=['GET', 'POST'])
+def personne_update_wtf():
     # L'utilisateur vient de cliquer sur le bouton "EDIT". Récupère la valeur de "id_genre"
     id_genre_update = request.values['id_personne_btn_edit_html']
 
@@ -195,7 +199,7 @@ def personne_updater_wtf():
 
     except Exception as Exception_personne_updater_wtf:
         raise ExceptionGenreUpdateWtf(f"fichier : {Path(__file__).name}  ;  "
-                                      f"{personne_updater_wtf.__name__} ; "
+                                      f"{personne_update_wtf.__name__} ; "
                                       f"{Exception_personne_updater_wtf}")
 
     return render_template("genres/personne_updater_wtf.html", form_update=form_update)
@@ -216,7 +220,7 @@ def personne_updater_wtf():
 """
 
 
-@app.route("/genre_delete", methods=['GET', 'POST'])
+@app.route("/personne_delete_wtf", methods=['GET', 'POST'])
 def personne_delete_wtf():
     data_films_attribue_genre_delete = None
     btn_submit_del = None

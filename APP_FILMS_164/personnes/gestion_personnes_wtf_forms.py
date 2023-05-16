@@ -4,7 +4,7 @@
     Gestion des formulaires avec WTF
 """
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateField
+from wtforms import StringField, DateField, SelectField
 from wtforms import SubmitField
 from wtforms.validators import Length, InputRequired, DataRequired
 from wtforms.validators import Regexp
@@ -16,14 +16,25 @@ class FormWTFAjouterGenres(FlaskForm):
         Définition d'un "bouton" submit avec un libellé personnalisé.
     """
     nom_genre_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
-    nom_genre_wtf = StringField("Clavioter la technique ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    nom_genre_wtf = StringField("Clavioter le nom de la personne ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                    Regexp(nom_genre_regexp,
                                                                           message="Pas de chiffres, de caractères "
                                                                                   "spéciaux, "
                                                                                   "d'espace à double, de double "
                                                                                   "apostrophe, de double trait union")
                                                                    ])
-
+    prenom_genre_wtf = StringField("Clavioter le prenom de la personne ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+                                                                   Regexp(nom_genre_regexp,
+                                                                          message="Pas de chiffres, de caractères "
+                                                                                  "spéciaux, "
+                                                                                  "d'espace à double, de double "
+                                                                                  "apostrophe, de double trait union")
+                                                                   ])
+    email_dropdown_wtf = SelectField('Email(listedéroulante)',
+                                      validators=[DataRequired(message="Sélectionnerunemail.")],
+                                      validate_choice=False,
+                                      coerce=int
+                                      )
     submit = SubmitField("Enregistrer technique")
 
 
