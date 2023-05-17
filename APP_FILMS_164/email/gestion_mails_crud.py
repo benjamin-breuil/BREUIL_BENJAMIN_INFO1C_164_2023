@@ -12,7 +12,7 @@ from flask import url_for
 from APP_FILMS_164 import app
 from APP_FILMS_164.database.database_tools import DBconnection
 from APP_FILMS_164.erreurs.exceptions import *
-from APP_FILMS_164.genres.gestion_genres_wtf_forms import FormWTFAjouterGenres
+from APP_FILMS_164.email.gestion_mails_wtf_forms import FormWTFAjouterMails
 from APP_FILMS_164.genres.gestion_genres_wtf_forms import FormWTFDeleteGenre
 from APP_FILMS_164.genres.gestion_genres_wtf_forms import FormWTFUpdateGenre
 
@@ -34,7 +34,7 @@ def emails_afficher(order_by, id_genre_sel):
         try:
             with DBconnection() as mc_afficher:
                 if order_by == "ASC" and id_genre_sel == 0:
-                    strsql_genres_afficher = """SELECT * FROM t_niveau"""
+                    strsql_genres_afficher = """SELECT * FROM t_email"""
                     mc_afficher.execute(strsql_genres_afficher)
                 elif order_by == "ASC":
                     # C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
@@ -43,11 +43,11 @@ def emails_afficher(order_by, id_genre_sel):
                     # donc, je précise les champs à afficher
                     # Constitution d'un dictionnaire pour associer l'id du genre sélectionné avec un nom de variable
                     valeur_id_genre_selected_dictionnaire = {"value_id_genre_selected": id_genre_sel}
-                    strsql_genres_afficher = """SELECT id_niveau, name_niveau  FROM t_niveau WHERE id_niveau = %(value_id_genre_selected)s"""
+                    strsql_genres_afficher = """SELECT id_email, adresse_email  FROM t_email WHERE id_email = %(value_id_genre_selected)s"""
 
                     mc_afficher.execute(strsql_genres_afficher, valeur_id_genre_selected_dictionnaire)
                 else:
-                    strsql_genres_afficher = """SELECT id_niveau, name_niveau  FROM t_niveau ORDER BY id_niveau DESC"""
+                    strsql_genres_afficher = """SELECT id_email, adresse_email  FROM t_email ORDER BY id_email DESC"""
 
                     mc_afficher.execute(strsql_genres_afficher)
 
@@ -68,7 +68,7 @@ def emails_afficher(order_by, id_genre_sel):
 
         except Exception as Exception_genres_afficher:
             raise ExceptionGenresAfficher(f"fichier : {Path(__file__).name}  ;  "
-                                          f"{genres_afficher.__name__} ; "
+                                          f"{emails_afficher.__name__} ; "
                                           f"{Exception_genres_afficher}")
 
     # Envoie la page "HTML" au serveur.
@@ -97,7 +97,7 @@ def emails_afficher(order_by, id_genre_sel):
 
 @app.route("/emails_ajouter", methods=['GET', 'POST'])
 def emails_ajouter_wtf():
-    form = FormWTFAjouterGenres()
+    form = FormWTFAjouterMails()
     if request.method == "POST":
         try:
             if form.validate_on_submit():
@@ -109,7 +109,7 @@ def emails_ajouter_wtf():
 
 
 
-                strsql_insert_genre = """INSERT INTO t_niveau (id_niveau,name_niveau) VALUES (NULL,%(value_intitule_genre)s)"""
+                strsql_insert_genre = """INSERT INTO t_email (id_email,adresse_email) VALUES (NULL,%(value_intitule_genre)s)"""
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(strsql_insert_genre, valeurs_insertion_dictionnaire)
 
@@ -117,14 +117,14 @@ def emails_ajouter_wtf():
                 print(f"Données insérées !!")
 
                 # Pour afficher et constater l'insertion de la valeur, on affiche en ordre inverse. (DESC)
-                return redirect(url_for('genres_afficher', order_by='DESC', id_genre_sel=0))
+                return redirect(url_for('emails_afficher', order_by='DESC', id_genre_sel=0))
 
         except Exception as Exception_genres_ajouter_wtf:
             raise ExceptionGenresAjouterWtf(f"fichier : {Path(__file__).name}  ;  "
                                             f"{emails_ajouter_wtf.__name__} ; "
                                             f"{Exception_genres_ajouter_wtf}")
 
-    return render_template("genres/genres_ajouter_wtf.html", form=form)
+    return render_template("mails/mails_ajouter_wtf.html", form=form)
 
 
 """
