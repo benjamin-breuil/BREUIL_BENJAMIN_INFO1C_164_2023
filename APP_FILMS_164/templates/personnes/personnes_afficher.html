@@ -53,13 +53,17 @@
 							{{ row.prenom }}
 						</td>
                         <td class="align-middle">
-							{{ row.fk_email }}
+							{{ row.nom_email }}
 						</td>
                         <td class="align-middle">
-							{{ row.fk_num_tel }}
+							{{ row.num_tel }}
 						</td>
                         <td class="align-middle">
-							{{ row.fk_adresse }}
+							{{ row.rue }}
+                            {{ row.numero_rue }}
+                            {{ row.npa }}
+                            {{ row.ville }}
+                            {{ row.pays }}
 						</td>
 						<td class="text-center" class="align-middle">
 							<a class="btn btn-primary" href="{{ url_for('personnes_ajouter_wtf') }}" role="button">Ajouter</a>
