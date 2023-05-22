@@ -177,7 +177,7 @@ def email_update_wtf():
 
             # afficher et constater que la donnée est mise à jour.
             # Affiche seulement la valeur modifiée, "ASC" et l'"id_genre_update"
-            return redirect(url_for('genres_afficher', order_by="ASC", id_genre_sel=id_genre_update))
+            return redirect(url_for('emails_afficher', order_by="ASC", id_genre_sel=id_genre_update))
         elif request.method == "GET":
             # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
             str_sql_id_genre = "SELECT id_email, adresse_email FROM t_email " \
@@ -188,10 +188,9 @@ def email_update_wtf():
                 mybd_conn.execute(str_sql_id_genre, valeur_select_dictionnaire)
             # Une seule valeur est suffisante "fetchone()", vu qu'il n'y a qu'un seul champ "nom genre" pour l'UPDATE
             data_nom_genre = mybd_conn.fetchone()
-
-
+            if data_nom_genre:
             # Afficher la valeur sélectionnée dans les champs du formulaire "genre_update_wtf.html"
-            form_update.nom_genre_update_wtf.data = data_nom_genre["adresse_email"]
+                form_update.nom_genre_update_wtf.data = data_nom_genre["adresse_email"]
 
     except Exception as Exception_genre_update_wtf:
         raise ExceptionGenreUpdateWtf(f"fichier : {Path(__file__).name}  ;  "
@@ -282,10 +281,9 @@ def email_delete_wtf():
                 # Une seule valeur est suffisante "fetchone()",
                 # vu qu'il n'y a qu'un seul champ "nom genre" pour l'action DELETE
                 data_nom_genre = mydb_conn.fetchone()
-
-
             # Afficher la valeur sélectionnée dans le champ du formulaire "genre_delete_wtf.html"
-            form_delete.nom_genre_delete_wtf.data = data_nom_genre["adresse_email"]
+                if data_nom_genre is not None:
+                    form_delete.nom_genre_delete_wtf.data = data_nom_genre["adresse_email"]
 
             # Le bouton pour l'action "DELETE" dans le form. "genre_delete_wtf.html" est caché.
             btn_submit_del = False
