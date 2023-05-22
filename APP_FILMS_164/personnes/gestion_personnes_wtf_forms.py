@@ -35,6 +35,18 @@ class FormWTFAjouterGenres(FlaskForm):
                                       validate_choice=False,
                                       coerce=int
                                       )
+
+    num_dropdown_wtf = SelectField('Numéro de téléphone(listedéroulante)',
+                                      validators=[DataRequired(message="Sélectionnerunnum.")],
+                                      validate_choice=False,
+                                      coerce=int
+                                      )
+
+    adresse_dropdown_wtf = SelectField('Adresse (listedéroulante)',
+                                      validators=[DataRequired(message="Sélectionneruneadresse.")],
+                                      validate_choice=False,
+                                      coerce=int
+                                      )
     submit = SubmitField("Enregistrer technique")
 
 

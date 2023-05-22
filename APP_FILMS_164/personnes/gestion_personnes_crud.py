@@ -103,38 +103,78 @@ def personnes_afficher(order_by, id_genre_sel):
 @app.route("/personnes_ajouter_wtf", methods=['GET', 'POST'])
 def personnes_ajouter_wtf():
     form = FormWTFAjouterGenres()
-    if request.method == "POST":
-        try:
-            if form.validate_on_submit():
-                name_genre_wtf = form.nom_genre_wtf.data
-                nom_personne = name_genre_wtf.lower()
+    try:
+        if request.method == "POST" and form.submit.data:
+            name_genre_wtf = form.nom_genre_wtf.data
+            nom_personne = name_genre_wtf.lower()
 
-                prenom_personne_wtf = form.prenom_genre_wtf.data
-                prenom_personne = prenom_personne_wtf.lower()
+            prenom_personne_wtf = form.prenom_genre_wtf.data
+            prenom_personne = prenom_personne_wtf.lower()
 
-                valeurs_insertion_dictionnaire = {"value_intitule_personne": nom_personne,
-                                                  "value_prenom_personne": prenom_personne}
-                print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
+            email_fk = form.email_dropdown_wtf.data
+
+            numtel_fk = form.num_dropdown_wtf.data
+
+            adresse_fk = form.adresse_dropdown_wtf.data
+
+
+            valeurs_insertion_dictionnaire = {"value_intitule_personne": nom_personne,
+                                              "value_prenom_personne": prenom_personne,
+                                              "value_email_fk": email_fk,
+                                              "value_numtel_fk" : numtel_fk,
+                                              "value_adresse_fk" : adresse_fk
+                                              }
+            print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
+
+            strsql_insert_genre = """INSERT INTO t_personne (id_personne,nom,prenom,fk_email, fk_num_tel) VALUES (NULL,%(value_intitule_personne)s,%(value_prenom_personne)s,%(value_email_fk)s, %(value_numtel_fk)s)"""
+            with DBconnection() as mconn_bd:
+                mconn_bd.execute(strsql_insert_genre, valeurs_insertion_dictionnaire)
+
+            flash(f"Données insérées !!", "success")
+            print(f"Données insérées !!")
+
+            # Pour afficher et constater l'insertion de la valeur, on affiche en ordre inverse. (DESC)
+            return redirect(url_for('personnes_afficher', order_by='DESC', id_genre_sel=0))
+
+        elif request.method == "GET":
+            with DBconnection() as mc_afficher:
+                strsql_email_dropdown = """SELECT * FROM t_email ORDER BY id_email ASC"""
+                mc_afficher.execute(strsql_email_dropdown)
+            data_email = mc_afficher.fetchall()
+            print("gestion_personnes_crud.py data_email ", data_email, " Type : ", type(data_email))
+            email_val_list_dropdown = []
+            for i in data_email:
+                email_val_list_dropdown = [(i["id_email"], i["adresse_email"]) for i in data_email]
+            form.email_dropdown_wtf.choices = email_val_list_dropdown
+
+            with DBconnection() as ntc_afficher:
+                strsql_num_tel_dropdown = """SELECT * FROM t_num_tel ORDER BY id_num_tel ASC"""
+                ntc_afficher.execute(strsql_num_tel_dropdown)
+            data_num_tel = ntc_afficher.fetchall()
+            print("gestion_personnes_crud.py data_email ", data_num_tel, " Type : ", type(data_num_tel))
+            numtel_val_list_dropdown = []
+            for i in data_num_tel:
+                numtel_val_list_dropdown = [(i["id_num_tel"], i["num_tel"]) for i in data_num_tel]
+            form.num_dropdown_wtf.choices = numtel_val_list_dropdown
+
+            with DBconnection() as adc_afficher:
+                strsql_adresse_dropdown = """SELECT * FROM t_adresse ORDER BY id_adresse ASC"""
+                adc_afficher.execute(strsql_adresse_dropdown)
+            data_adresse = adc_afficher.fetchall()
+            print("gestion_personnes_crud.py data_email ", data_adresse, " Type : ", type(data_adresse))
+            adresse_val_list_dropdown = []
+            for i in data_adresse:
+                adresse_val_list_dropdown = [(i["id_adresse"], i["npa"]) for i in data_adresse]
+            form.adresse_dropdown_wtf.choices = adresse_val_list_dropdown
 
 
 
-                strsql_insert_genre = """INSERT INTO t_personne (id_personne,nom,prenom) VALUES (NULL,%(value_intitule_personne)s,%(value_prenom_personne)s)"""
-                with DBconnection() as mconn_bd:
-                    mconn_bd.execute(strsql_insert_genre, valeurs_insertion_dictionnaire)
-
-                flash(f"Données insérées !!", "success")
-                print(f"Données insérées !!")
-
-                # Pour afficher et constater l'insertion de la valeur, on affiche en ordre inverse. (DESC)
-                return redirect(url_for('personnes_afficher', order_by='DESC', id_genre_sel=0))
-
-        except Exception as Exception_personnes_ajouter_wtf:
-            raise ExceptionGenresAjouterWtf(f"fichier : {Path(__file__).name}  ;  "
-                                            f"{personnes_ajouter_wtf.__name__} ; "
-                                            f"{Exception_personnes_ajouter_wtf}")
+    except Exception as Exception_personnes_ajouter_wtf:
+        raise ExceptionGenresAjouterWtf(f"fichier : {Path(__file__).name}  ;  "
+                                        f"{personnes_ajouter_wtf.__name__} ; "
+                                        f"{Exception_personnes_ajouter_wtf}")
 
     return render_template("personnes/personnes_ajouter_wtf.html", form=form)
-
 
 """
     Auteur : OM 2021.03.29

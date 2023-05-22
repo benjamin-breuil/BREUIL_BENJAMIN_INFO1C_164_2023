@@ -26,9 +26,20 @@
 						{% endfor %}
 					</p>
                     <p>
-						{{ form.email_dropdown_wtf.label }}<br>
-						{{ form.email_dropdown_wtf(size=32) }}<br>
+                        {{ form.email_dropdown_wtf(class="form-select-sm") }}<br>
 						{% for error in form.email_dropdown_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+                    <p>
+                        {{ form.num_dropdown_wtf(class="form-select-sm") }}<br>
+						{% for error in form.num_dropdown_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+                    <p>
+                        {{ form.adresse_dropdown_wtf(class="form-select-sm") }}<br>
+						{% for error in form.adresse_dropdown_wtf.errors %}
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>
