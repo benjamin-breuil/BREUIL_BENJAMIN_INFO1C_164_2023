@@ -180,8 +180,7 @@ def email_update_wtf():
             return redirect(url_for('emails_afficher', order_by="ASC", id_genre_sel=id_genre_update))
         elif request.method == "GET":
             # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
-            str_sql_id_genre = "SELECT id_email, adresse_email FROM t_email " \
-                               "WHERE id_email = %(value_id_genre)s"
+            str_sql_id_genre = "SELECT id_email, adresse_email FROM t_email WHERE id_email = %(value_id_genre)s"
             valeur_select_dictionnaire = {"value_id_genre": id_genre_update}
             print(valeur_select_dictionnaire)
             with DBconnection() as mybd_conn:
@@ -256,7 +255,7 @@ def email_delete_wtf():
                 print(f"Genre définitivement effacé !!")
 
                 # afficher les données
-                return redirect(url_for('genres_afficher', order_by="ASC", id_genre_sel=0))
+                return redirect(url_for('emails_afficher', order_by="ASC", id_genre_sel=0))
 
         if request.method == "GET":
             valeur_select_dictionnaire = {"value_id_genre": id_genre_delete}
