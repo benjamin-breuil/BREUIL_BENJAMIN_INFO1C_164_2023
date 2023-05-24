@@ -36,9 +36,9 @@ def personnes_afficher(order_by, id_genre_sel):
                 if order_by == "ASC" and id_genre_sel == 0:
                     strsql_personnes_afficher = """SELECT t_personne.*, t_email.adresse_email AS nom_email, t_num_tel.num_tel AS num_tel, t_adresse.*
                                                         FROM t_personne
-                                                        INNER JOIN t_email ON t_personne.fk_email = t_email.id_email
-                                                        INNER JOIN t_num_tel ON t_personne.fk_num_tel = t_num_tel.id_num_tel
-                                                        INNER JOIN t_adresse ON t_personne.fk_adresse = t_adresse.id_adresse
+                                                        LEFT JOIN t_email ON t_personne.fk_email = t_email.id_email
+                                                        LEFT JOIN t_num_tel ON t_personne.fk_num_tel = t_num_tel.id_num_tel
+                                                        LEFT JOIN t_adresse ON t_personne.fk_adresse = t_adresse.id_adresse
                                                         """
                     mc_afficher.execute(strsql_personnes_afficher)
                 elif order_by == "ASC":
@@ -126,7 +126,7 @@ def personnes_ajouter_wtf():
                                               }
             print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
 
-            strsql_insert_genre = """INSERT INTO t_personne (id_personne,nom,prenom,fk_email, fk_num_tel) VALUES (NULL,%(value_intitule_personne)s,%(value_prenom_personne)s,%(value_email_fk)s, %(value_numtel_fk)s)"""
+            strsql_insert_genre = """INSERT INTO t_personne (id_personne,nom,prenom,fk_email, fk_num_tel, fk_adresse) VALUES (NULL,%(value_intitule_personne)s,%(value_prenom_personne)s,%(value_email_fk)s, %(value_numtel_fk)s, %(value_adresse_fk)s)"""
             with DBconnection() as mconn_bd:
                 mconn_bd.execute(strsql_insert_genre, valeurs_insertion_dictionnaire)
 
@@ -164,7 +164,7 @@ def personnes_ajouter_wtf():
             print("gestion_personnes_crud.py data_email ", data_adresse, " Type : ", type(data_adresse))
             adresse_val_list_dropdown = []
             for i in data_adresse:
-                adresse_val_list_dropdown = [(i["id_adresse"], i["npa"]) for i in data_adresse]
+                adresse_val_list_dropdown = [(i["id_adresse"], i["npa"] + " " + i["rue"]  + " " + i["numero_rue"]  + ", " + i["ville"]  + " " + i["pays"])  for i in data_adresse]
             form.adresse_dropdown_wtf.choices = adresse_val_list_dropdown
 
 

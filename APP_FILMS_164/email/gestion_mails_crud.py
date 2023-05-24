@@ -245,11 +245,16 @@ def email_delete_wtf():
                 valeur_delete_dictionnaire = {"value_id_genre": id_genre_delete}
                 print("valeur_delete_dictionnaire ", valeur_delete_dictionnaire)
 
+                str_sql_delete_personnes = "UPDATE t_personne SET fk_email = NULL WHERE fk_email = %(value_id_genre)s"
+                with DBconnection() as mconn_bd:
+                    mconn_bd.execute(str_sql_delete_personnes, valeur_delete_dictionnaire)
+
                 str_sql_delete_idgenre = """DELETE FROM t_email WHERE id_email = %(value_id_genre)s"""
                 # Manière brutale d'effacer d'abord la "fk_genre", même si elle n'existe pas dans la "t_genre_film"
                 # Ensuite on peut effacer le genre vu qu'il n'est plus "lié" (INNODB) dans la "t_genre_film"
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(str_sql_delete_idgenre, valeur_delete_dictionnaire)
+
 
                 flash(f"Genre définitivement effacé !!", "success")
                 print(f"Genre définitivement effacé !!")
