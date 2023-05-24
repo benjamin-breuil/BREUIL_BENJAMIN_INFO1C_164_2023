@@ -57,7 +57,7 @@ class FormWTFUpdateGenre(FlaskForm):
         Définition d'un "bouton" submit avec un libellé personnalisé.
     """
     nom_genre_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
-    nom_genre_update_wtf = StringField("Clavioter le genre ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    nom_personne_updater_wtf = StringField("Clavioter le nom ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                           Regexp(nom_genre_update_regexp,
                                                                                  message="Pas de chiffres, de "
                                                                                          "caractères "
@@ -66,6 +66,33 @@ class FormWTFUpdateGenre(FlaskForm):
                                                                                          "apostrophe, de double trait "
                                                                                          "union")
                                                                           ])
+    prenom_personne_updater_wtf = StringField("Clavioter le prénom ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+                                                                          Regexp(nom_genre_update_regexp,
+                                                                                 message="Pas de chiffres, de "
+                                                                                         "caractères "
+                                                                                         "spéciaux, "
+                                                                                         "d'espace à double, de double "
+                                                                                         "apostrophe, de double trait "
+                                                                                         "union")
+                                                                          ])
+
+    email_dropdown_update_wtf = SelectField('Email(listedéroulante)',
+                                      validators=[DataRequired(message="Sélectionnerunemail.")],
+                                      validate_choice=False,
+                                      coerce=int
+                                      )
+
+    num_dropdown_update_wtf = SelectField('Numéro de téléphone(listedéroulante)',
+                                      validators=[DataRequired(message="Sélectionnerunnum.")],
+                                      validate_choice=False,
+                                      coerce=int
+                                      )
+
+    adresse_dropdown_update_wtf = SelectField('Adresse (listedéroulante)',
+                                      validators=[DataRequired(message="Sélectionneruneadresse.")],
+                                      validate_choice=False,
+                                      coerce=int
+                                      )
     submit = SubmitField("Update genre")
 
 

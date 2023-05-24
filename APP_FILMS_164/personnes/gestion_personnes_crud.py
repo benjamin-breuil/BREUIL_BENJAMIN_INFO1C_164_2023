@@ -211,13 +211,25 @@ def personne_update_wtf():
             name_genre_update = form_update.nom_personne_updater_wtf.data
             name_genre_update = name_genre_update.lower()
 
+            prenom_pers_update = form_update.prenom_personne_updater_wtf.data
+            prenom_pers = prenom_pers_update.lower()
+
+            update_email_fk = form_update.email_dropdown_update_wtf.data
+
+            update_numtel_fk = form_update.num_dropdown_update_wtf.data
+
+            update_adresse_fk = form_update.adresse_dropdown_update_wtf.data
 
             valeur_update_dictionnaire = {"value_id_genre": id_genre_update,
-                                          "value_name_genre": name_genre_update
+                                          "value_name_genre": name_genre_update,
+                                          "value_prenom_pers": prenom_pers,
+                                          "value_update_email": update_email_fk,
+                                          "value_update_numtel": update_numtel_fk,
+                                          "value_update_adresse": update_adresse_fk
                                           }
             print("valeur_update_dictionnaire ", valeur_update_dictionnaire)
 
-            str_sql_update_intitulegenre = """UPDATE t_niveau SET name_niveau = %(value_name_genre)s WHERE id_niveau = %(value_id_genre)s"""
+            str_sql_update_intitulegenre = """UPDATE t_personne SET nom = %(value_name_genre)s, prenom = %(value_prenom_pers)s, fk_email = %(value_update_email)s, fk_num_tel = %(value_update_numtel)s, fk_adresse = %(value_update_adresse)s WHERE id_personne = %(value_id_genre)s"""
             with DBconnection() as mconn_bd:
                 mconn_bd.execute(str_sql_update_intitulegenre, valeur_update_dictionnaire)
 
@@ -226,11 +238,11 @@ def personne_update_wtf():
 
             # afficher et constater que la donnée est mise à jour.
             # Affiche seulement la valeur modifiée, "ASC" et l'"id_genre_update"
-            return redirect(url_for('personnes_afficher', order_by="ASC", id_genre_sel=id_genre_update))
+            return redirect(url_for('personnes_afficher', order_by="DESC", id_genre_sel=id_genre_update))
         elif request.method == "GET":
             # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_personne"
-            str_sql_id_genre = "SELECT id_niveau, name_niveau FROM t_niveau " \
-                               "WHERE id_niveau = %(value_id_genre)s"
+            str_sql_id_genre = "SELECT id_personne, nom, prenom, fk_email, fk_num_tel, fk_adresse FROM t_personne " \
+                               "WHERE id_personne = %(value_id_genre)s"
             valeur_select_dictionnaire = {"value_id_genre": id_genre_update}
             print(valeur_select_dictionnaire)
             with DBconnection() as mybd_conn:
@@ -239,15 +251,32 @@ def personne_update_wtf():
             data_nom_genre = mybd_conn.fetchone()
 
 
-            # Afficher la valeur sélectionnée dans les champs du formulaire "personne_updater_wtf.html"
-            form_update.nom_personne_updater_wtf.data = data_nom_genre["name_niveau"]
+            with DBconnection() as mc_afficher:
+                    strsql_email_dropdown = """SELECT * FROM t_email ORDER BY id_email ASC"""
+                    mc_afficher.execute(strsql_email_dropdown)
+            data_email = mc_afficher.fetchall()
+            print("gestion_personnes_crud.py data_email ", data_email, " Type : ", type(data_email))
+            email_val_list_dropdown = []
+            for i in data_email:
+                email_val_list_dropdown = [(i["id_email"], i["adresse_email"]) for i in data_email]
+            form_update.email_dropdown_update_wtf.choices = email_val_list_dropdown
 
+
+
+
+
+
+
+
+            # Afficher la valeur sélectionnée dans les champs du formulaire "personne_updater_wtf.html"
+            form_update.nom_personne_updater_wtf.data = data_nom_genre["nom"]
+            form_update.prenom_personne_updater_wtf.data = data_nom_genre["prenom"]
     except Exception as Exception_personne_updater_wtf:
         raise ExceptionGenreUpdateWtf(f"fichier : {Path(__file__).name}  ;  "
                                       f"{personne_update_wtf.__name__} ; "
                                       f"{Exception_personne_updater_wtf}")
 
-    return render_template("genres/personne_updater_wtf.html", form_update=form_update)
+    return render_template("personnes/personne_update_wtf.html", form_update=form_update)
 
 
 """
@@ -296,13 +325,11 @@ def personne_delete_wtf():
                 valeur_delete_dictionnaire = {"value_id_genre": id_genre_delete}
                 print("valeur_delete_dictionnaire ", valeur_delete_dictionnaire)
 
-                str_sql_delete_films_genre = """DELETE FROM t_avoir_niveau_technique_niveau WHERE fk_niveau = %(value_id_genre)s"""
-                str_sql_delete_idgenre = """DELETE FROM t_niveau     WHERE id_niveau = %(value_id_genre)s"""
+                str_sql_delete_films_genre = """DELETE FROM t_personne WHERE id_personne = %(value_id_genre)s"""
                 # Manière brutale d'effacer d'abord la "fk_genre", même si elle n'existe pas dans la "t_genre_film"
                 # Ensuite on peut effacer le genre vu qu'il n'est plus "lié" (INNODB) dans la "t_genre_film"
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(str_sql_delete_films_genre, valeur_delete_dictionnaire)
-                    mconn_bd.execute(str_sql_delete_idgenre, valeur_delete_dictionnaire)
 
                 flash(f"Genre définitivement effacé !!", "success")
                 print(f"Genre définitivement effacé !!")
@@ -315,10 +342,8 @@ def personne_delete_wtf():
             print(id_genre_delete, type(id_genre_delete))
 
             # Requête qui affiche tous les films_genres qui ont le genre que l'utilisateur veut effacer
-            str_sql_genres_films_delete = """SELECT id_avoir_niveau_technique_niveau, name, id_niveau, name_niveau FROM t_avoir_niveau_technique_niveau 
-                                            INNER JOIN t_technique ON t_avoir_niveau_technique_niveau.fk_technique = t_technique.id_technique
-                                            INNER JOIN t_niveau ON t_avoir_niveau_technique_niveau.fk_niveau = t_niveau.id_niveau
-                                            WHERE fk_niveau = %(value_id_genre)s"""
+            str_sql_genres_films_delete = """SELECT nom FROM t_personne
+                                            WHERE id_personne = %(value_id_genre)s"""
 
             with DBconnection() as mydb_conn:
                 mydb_conn.execute(str_sql_genres_films_delete, valeur_select_dictionnaire)
@@ -330,17 +355,15 @@ def personne_delete_wtf():
                 session['data_films_attribue_genre_delete'] = data_films_attribue_genre_delete
 
                 # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_personne"
-                str_sql_id_genre = "SELECT id_niveau, name_niveau FROM t_niveau WHERE id_niveau = %(value_id_genre)s"
+                str_sql_id_genre = "SELECT nom FROM t_personne WHERE id_personne = %(value_id_genre)s"
 
                 mydb_conn.execute(str_sql_id_genre, valeur_select_dictionnaire)
                 # Une seule valeur est suffisante "fetchone()",
                 # vu qu'il n'y a qu'un seul champ "nom genre" pour l'action DELETE
                 data_nom_genre = mydb_conn.fetchone()
-                print("data_nom_genre ", data_nom_genre, " type ", type(data_nom_genre), " genre ",
-                      data_nom_genre["name_niveau"])
 
             # Afficher la valeur sélectionnée dans le champ du formulaire "personne_delete_wtf.html"
-            form_delete.nom_personne_delete_wtf.data = data_nom_genre["name_niveau"]
+            form_delete.nom_genre_delete_wtf.data = data_nom_genre["nom"]
 
             # Le bouton pour l'action "DELETE" dans le form. "personne_delete_wtf.html" est caché.
             btn_submit_del = False
@@ -350,7 +373,7 @@ def personne_delete_wtf():
                                       f"{personne_delete_wtf.__name__} ; "
                                       f"{Exception_personne_delete_wtf}")
 
-    return render_template("genres/personne_delete_wtf.html",
+    return render_template("personnes/personne_delete_wtf.html",
                            form_delete=form_delete,
                            btn_submit_del=btn_submit_del,
                            data_films_associes=data_films_attribue_genre_delete)

@@ -1,20 +1,45 @@
 {% extends "base.html" %}
-{% block title %} Editer un GENRE (WTF) {% endblock %}
+{% block title %} Editer un PERSONNE (WTF) {% endblock %}
 {% block body %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-				Editer un GENRE
+				Editer un PERSONNE
 			</p>
 			<form action="" method="POST" novalidate>
 				<!-- Protection contre les attaques Cross-Site Request Forgery (CSRF) -->
 				{{ form_update.hidden_tag() }}
 				<div class="form-group">
 					<p>
-						{{ form_update.nom_genre_update_wtf.label }}<br>
-						{{ form_update.nom_genre_update_wtf(size=32) }}<br>
-						{% for error in form_update.nom_genre_update_wtf.errors %}
+						{{ form_update.nom_personne_updater_wtf.label }}<br>
+						{{ form_update.nom_personne_updater_wtf(size=32) }}<br>
+						{% for error in form_update.nom_personne_updater_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+                    <p>
+						{{ form_update.prenom_personne_updater_wtf.label }}<br>
+						{{ form_update.prenom_personne_updater_wtf(size=32) }}<br>
+						{% for error in form_update.prenom_personne_updater_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+                    <p>
+						{{ form_update.email_dropdown_update_wtf.label }}<br>
+						{% for error in form_update.email_dropdown_update_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+                    <p>
+						{{ form_update.num_dropdown_update_wtf.label }}<br>
+						{% for error in form_update.num_dropdown_update_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+                                    <p>
+						{{ form_update.adresse_dropdown_update_wtf.label }}<br>
+						{% for error in form_update.adresse_dropdown_update_wtf.errors %}
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>
