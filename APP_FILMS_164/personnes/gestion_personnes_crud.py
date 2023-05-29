@@ -263,11 +263,6 @@ def personne_update_wtf():
 
 
 
-
-
-
-
-
             # Afficher la valeur sélectionnée dans les champs du formulaire "personne_updater_wtf.html"
             form_update.nom_personne_updater_wtf.data = data_nom_genre["nom"]
             form_update.prenom_personne_updater_wtf.data = data_nom_genre["prenom"]
