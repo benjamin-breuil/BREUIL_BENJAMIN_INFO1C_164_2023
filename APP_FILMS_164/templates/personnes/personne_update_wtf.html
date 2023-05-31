@@ -26,9 +26,9 @@
 						{% endfor %}
 					</p>
                     <p>
-                        {{ form_update.adresse_dropdown_update_wtf.label(class="form-control-label") }}<br>
-                        {{ form_update.adresse_dropdown_update_wtf(class="form-select-sm") }}
-                        {% for error in form_update.adresse_dropdown_update_wtf.errors %}
+                        {{ form_update.email_dropdown_update_wtf.label(class="form-control-label") }}<br>
+                        {{ form_update.email_dropdown_update_wtf(class="form-select-sm") }}
+                        {% for error in form_update.email_dropdown_update_wtf.errors %}
                            <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </p>

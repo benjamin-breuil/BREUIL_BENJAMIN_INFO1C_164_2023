@@ -164,7 +164,7 @@ def personnes_ajouter_wtf():
             print("gestion_personnes_crud.py data_email ", data_adresse, " Type : ", type(data_adresse))
             adresse_val_list_dropdown = []
             for i in data_adresse:
-                adresse_val_list_dropdown = [(i["id_adresse"], i["npa"] + " " + i["rue"]  + " " + i["numero_rue"]  + ", " + i["ville"]  + " " + i["pays"])  for i in data_adresse]
+                adresse_val_list_dropdown = [(i["id_adresse"], i["rue"])  for i in data_adresse]
             form.adresse_dropdown_wtf.choices = adresse_val_list_dropdown
 
 
@@ -261,7 +261,25 @@ def personne_update_wtf():
                 email_val_list_dropdown = [(i["id_email"], i["adresse_email"]) for i in data_email]
             form_update.email_dropdown_update_wtf.choices = email_val_list_dropdown
 
+            with DBconnection() as ntc_afficher:
+                strsql_num_tel_dropdown = """SELECT * FROM t_num_tel ORDER BY id_num_tel ASC"""
+                ntc_afficher.execute(strsql_num_tel_dropdown)
+            data_num_tel = ntc_afficher.fetchall()
+            print("gestion_personnes_crud.py data_email ", data_num_tel, " Type : ", type(data_num_tel))
+            numtel_val_list_dropdown = []
+            for i in data_num_tel:
+                numtel_val_list_dropdown = [(i["id_num_tel"], i["num_tel"]) for i in data_num_tel]
+            form_update.num_dropdown_update_wtf.choices = numtel_val_list_dropdown
 
+            with DBconnection() as adc_afficher:
+                strsql_adresse_dropdown = """SELECT * FROM t_adresse ORDER BY id_adresse ASC"""
+                adc_afficher.execute(strsql_adresse_dropdown)
+            data_adresse = adc_afficher.fetchall()
+            print("gestion_personnes_crud.py data_email ", data_adresse, " Type : ", type(data_adresse))
+            adresse_val_list_dropdown = []
+            for i in data_adresse:
+                adresse_val_list_dropdown = [(i["id_adresse"], i["rue"]) for i in data_adresse]
+            form_update.adresse_dropdown_update_wtf.choices = adresse_val_list_dropdown
 
             # Afficher la valeur sélectionnée dans les champs du formulaire "personne_updater_wtf.html"
             form_update.nom_personne_updater_wtf.data = data_nom_genre["nom"]
