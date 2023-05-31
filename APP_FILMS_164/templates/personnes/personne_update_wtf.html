@@ -26,23 +26,26 @@
 						{% endfor %}
 					</p>
                     <p>
-						{{ form_update.email_dropdown_update_wtf.label }}<br>
-						{% for error in form_update.email_dropdown_update_wtf.errors %}
-							<span style="color: red;">[{{ error }}]</span>
-						{% endfor %}
-					</p>
+                        {{ form_update.adresse_dropdown_update_wtf.label(class="form-control-label") }}<br>
+                        {{ form_update.adresse_dropdown_update_wtf(class="form-select-sm") }}
+                        {% for error in form_update.adresse_dropdown_update_wtf.errors %}
+                           <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
                     <p>
-						{{ form_update.num_dropdown_update_wtf.label }}<br>
-						{% for error in form_update.num_dropdown_update_wtf.errors %}
-							<span style="color: red;">[{{ error }}]</span>
-						{% endfor %}
-					</p>
-                                    <p>
-						{{ form_update.adresse_dropdown_update_wtf.label }}<br>
-						{% for error in form_update.adresse_dropdown_update_wtf.errors %}
-							<span style="color: red;">[{{ error }}]</span>
-						{% endfor %}
-					</p>
+                        {{ form_update.num_dropdown_update_wtf.label(class="form-control-label") }}<br>
+                        {{ form_update.num_dropdown_update_wtf(class="form-select-sm") }}
+                        {% for error in form_update.num_dropdown_update_wtf.errors %}
+                           <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ form_update.adresse_dropdown_update_wtf.label(class="form-control-label") }}<br>
+                        {{ form_update.adresse_dropdown_update_wtf(class="form-select-sm") }}
+                        {% for error in form_update.adresse_dropdown_update_wtf.errors %}
+                           <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
 				</div>
 				{{ form_update.submit(class="btn btn-primary") }}
 			</form>
