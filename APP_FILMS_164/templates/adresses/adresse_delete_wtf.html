@@ -14,13 +14,13 @@
 					{% if data_films_associes %}
 						<h3>Ce mail est associé avec le(s) personne(s) suivant(e)(s) :</h3>
 					{% else %}
-						<h3>Ce mail à effacer n'est associé à personne.</h3>
+						<h3>Cette adresse à effacer n'est associé à personne.</h3>
 					{% endif %}
 					{% if data_films_associes %}
 						<thead>
 							<tr>
 								<th>
-									Mail(S)
+									Adresses(S)
 								</th>
 							</tr>
 						</thead>
@@ -28,7 +28,8 @@
 							<tbody>
 								<tr>
 									<td>
-										{{ row.adresse_email }}
+										{{ row.rue }}
+
 									</td>
 								</tr>
 							</tbody>

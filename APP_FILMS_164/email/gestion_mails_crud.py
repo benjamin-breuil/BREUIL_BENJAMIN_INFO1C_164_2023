@@ -9,7 +9,6 @@ from flask import request
 from flask import session
 from flask import url_for
 
-from APP_FILMS_164 import app
 from APP_FILMS_164.database.database_tools import DBconnection
 from APP_FILMS_164.erreurs.exceptions import *
 from APP_FILMS_164.email.gestion_mails_wtf_forms import FormWTFAjouterMails
