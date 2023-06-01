@@ -165,7 +165,7 @@ def adresse_update_wtf():
         if form_update.validate_on_submit():
             # Récupèrer la valeur du champ depuis "genre_update_wtf.html" après avoir cliqué sur "SUBMIT".
             # Puis la convertir en lettres minuscules.
-            name_genre_update = form_update.nom_genre_update_wtf.data
+            name_genre_update = form_update.update_nom_genre_wtf.data
             name_genre_update = name_genre_update.lower()
 
 
@@ -174,7 +174,7 @@ def adresse_update_wtf():
                                           }
             print("valeur_update_dictionnaire ", valeur_update_dictionnaire)
 
-            str_sql_update_intitulegenre = """UPDATE t_email SET adresse_email = %(value_name_genre)s WHERE id_email = %(value_id_genre)s"""
+            str_sql_update_intitulegenre = """UPDATE t_adresse SET rue = %(value_name_genre)s WHERE id_adresse = %(value_id_genre)s"""
             with DBconnection() as mconn_bd:
                 mconn_bd.execute(str_sql_update_intitulegenre, valeur_update_dictionnaire)
 
@@ -183,10 +183,10 @@ def adresse_update_wtf():
 
             # afficher et constater que la donnée est mise à jour.
             # Affiche seulement la valeur modifiée, "ASC" et l'"id_genre_update"
-            return redirect(url_for('emails_afficher', order_by="ASC", id_genre_sel=id_genre_update))
+            return redirect(url_for('adresses_afficher', order_by="ASC", id_genre_sel=id_genre_update))
         elif request.method == "GET":
             # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
-            str_sql_id_genre = "SELECT id_email, adresse_email FROM t_email WHERE id_email = %(value_id_genre)s"
+            str_sql_id_genre = "SELECT id_adresse, rue FROM t_adresse WHERE id_adresse = %(value_id_genre)s"
             valeur_select_dictionnaire = {"value_id_genre": id_genre_update}
             print(valeur_select_dictionnaire)
             with DBconnection() as mybd_conn:
@@ -195,7 +195,7 @@ def adresse_update_wtf():
             data_nom_genre = mybd_conn.fetchone()
             if data_nom_genre:
             # Afficher la valeur sélectionnée dans les champs du formulaire "genre_update_wtf.html"
-                form_update.nom_genre_update_wtf.data = data_nom_genre["adresse_email"]
+                form_update.update_nom_genre_wtf.data = data_nom_genre["rue"]
 
     except Exception as Exception_genre_update_wtf:
         raise ExceptionGenreUpdateWtf(f"fichier : {Path(__file__).name}  ;  "

@@ -204,8 +204,7 @@ def personne_update_wtf():
     # Objet formulaire pour l'UPDATE
     form_update = FormWTFUpdateGenre()
     try:
-        print(" on submit ", form_update.validate_on_submit())
-        if form_update.validate_on_submit():
+        if request.method == "POST":
             # Récupèrer la valeur du champ depuis "personne_updater_wtf.html" après avoir cliqué sur "SUBMIT".
             # Puis la convertir en lettres minuscules.
             name_genre_update = form_update.nom_personne_updater_wtf.data

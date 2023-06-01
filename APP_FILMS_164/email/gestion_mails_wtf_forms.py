@@ -17,7 +17,7 @@ class FormWTFAjouterMails(FlaskForm):
     """
     #nom_genre_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
     nom_genre_regexp = "^[\w\.-]+@[\w\.-]+\.\w+$"
-    nom_genre_wtf = StringField("Clavioter la technique ", validators=[Length(min=2, max=200, message="min 2 max 20"),
+    nom_genre_wtf = StringField("Clavioter la mail ", validators=[Length(min=2, max=200, message="min 2 max 20"),
                                                                    Regexp(nom_genre_regexp,
                                                                           message="Pas de chiffres, de caractères "
                                                                                   "spéciaux, "
