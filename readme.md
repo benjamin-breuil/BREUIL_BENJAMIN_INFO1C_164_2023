@@ -3,6 +3,17 @@
 
 Le "début de la fin"
 
+## Comment installer
+
+1. faire le commande 
+```shell
+    git clone git@github.com:benjamin-breuil/BREUIL_BENJAMIN_INFO1C_164_2023.git
+```
+
+2. lancer dans le dossier database -> 1_ImportationDumpSql.py
+
+
+3. lancer run_mon_app.py
 
 Le mode d'emploi et vos devoirs se trouvent à l'adresse suivante.
 

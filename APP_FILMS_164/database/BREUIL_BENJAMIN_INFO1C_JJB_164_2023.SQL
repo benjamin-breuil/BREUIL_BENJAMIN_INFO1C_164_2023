@@ -15,12 +15,12 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- Listage de la structure de la base pour BREUIL_BENJAMIN_INFO1C_JJB_164_2023
-DROP DATABASE IF EXISTS `BREUIL_BENJAMIN_INFO1C_JJB_164_2023`;
-CREATE DATABASE IF NOT EXISTS `BREUIL_BENJAMIN_INFO1C_JJB_164_2023` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `BREUIL_BENJAMIN_INFO1C_JJB_164_2023`;
+-- Listage de la structure de la base pour breuil_benjamin_info1c_jjb_164_2023
+DROP DATABASE IF EXISTS `breuil_benjamin_info1c_jjb_164_2023`;
+CREATE DATABASE IF NOT EXISTS `breuil_benjamin_info1c_jjb_164_2023` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `breuil_benjamin_info1c_jjb_164_2023`;
 
--- Listage de la structure de table BREUIL_BENJAMIN_INFO1C_JJB_164_2023. t_adresse
+-- Listage de la structure de table breuil_benjamin_info1c_jjb_164_2023. t_adresse
 DROP TABLE IF EXISTS `t_adresse`;
 CREATE TABLE IF NOT EXISTS `t_adresse` (
   `id_adresse` int NOT NULL AUTO_INCREMENT,
@@ -30,9 +30,9 @@ CREATE TABLE IF NOT EXISTS `t_adresse` (
   `ville` varchar(100) DEFAULT NULL,
   `pays` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_adresse`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table BREUIL_BENJAMIN_INFO1C_JJB_164_2023.t_adresse : ~6 rows (environ)
+-- Listage des données de la table breuil_benjamin_info1c_jjb_164_2023.t_adresse : ~6 rows (environ)
 INSERT INTO `t_adresse` (`id_adresse`, `npa`, `rue`, `numero_rue`, `ville`, `pays`) VALUES
 	(1, '1200', 'Rue de la Gare', '15', 'Genève', 'Suisse'),
 	(2, '1234', 'Rue du Paradis', '1', 'Genève', 'Suisse'),
@@ -41,7 +41,7 @@ INSERT INTO `t_adresse` (`id_adresse`, `npa`, `rue`, `numero_rue`, `ville`, `pay
 	(5, '3456', 'Boulevard de la Paix', '7', 'Berne', 'Suisse'),
 	(6, '7890', 'Rue de la Gare', '15', 'Bâle', 'Suisse');
 
--- Listage de la structure de table BREUIL_BENJAMIN_INFO1C_JJB_164_2023. t_avoir_niveau_personne
+-- Listage de la structure de table breuil_benjamin_info1c_jjb_164_2023. t_avoir_niveau_personne
 DROP TABLE IF EXISTS `t_avoir_niveau_personne`;
 CREATE TABLE IF NOT EXISTS `t_avoir_niveau_personne` (
   `id_avoir_niveau_personne` int NOT NULL AUTO_INCREMENT,
@@ -54,9 +54,9 @@ CREATE TABLE IF NOT EXISTS `t_avoir_niveau_personne` (
   CONSTRAINT `t_avoir_niveau_personne_ibfk_2` FOREIGN KEY (`fk_personne`) REFERENCES `t_personne` (`id_personne`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table BREUIL_BENJAMIN_INFO1C_JJB_164_2023.t_avoir_niveau_personne : ~0 rows (environ)
+-- Listage des données de la table breuil_benjamin_info1c_jjb_164_2023.t_avoir_niveau_personne : ~0 rows (environ)
 
--- Listage de la structure de table BREUIL_BENJAMIN_INFO1C_JJB_164_2023. t_avoir_niveau_technique_niveau
+-- Listage de la structure de table breuil_benjamin_info1c_jjb_164_2023. t_avoir_niveau_technique_niveau
 DROP TABLE IF EXISTS `t_avoir_niveau_technique_niveau`;
 CREATE TABLE IF NOT EXISTS `t_avoir_niveau_technique_niveau` (
   `id_avoir_niveau_technique_niveau` int NOT NULL AUTO_INCREMENT,
@@ -67,15 +67,46 @@ CREATE TABLE IF NOT EXISTS `t_avoir_niveau_technique_niveau` (
   KEY `fk_technique` (`fk_technique`),
   CONSTRAINT `t_avoir_niveau_technique_niveau_ibfk_1` FOREIGN KEY (`fk_niveau`) REFERENCES `t_niveau` (`id_niveau`),
   CONSTRAINT `t_avoir_niveau_technique_niveau_ibfk_2` FOREIGN KEY (`fk_technique`) REFERENCES `t_technique` (`id_technique`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table BREUIL_BENJAMIN_INFO1C_JJB_164_2023.t_avoir_niveau_technique_niveau : ~3 rows (environ)
+-- Listage des données de la table breuil_benjamin_info1c_jjb_164_2023.t_avoir_niveau_technique_niveau : ~34 rows (environ)
 INSERT INTO `t_avoir_niveau_technique_niveau` (`id_avoir_niveau_technique_niveau`, `fk_niveau`, `fk_technique`) VALUES
 	(5, 3, 1),
 	(12, 4, 2),
-	(14, 9, 1);
+	(14, 9, 1),
+	(15, 1, 3),
+	(16, 1, 4),
+	(17, 9, 4),
+	(18, 3, 4),
+	(19, 4, 4),
+	(20, 5, 4),
+	(21, 1, 5),
+	(22, 3, 5),
+	(23, 9, 6),
+	(24, 1, 7),
+	(25, 9, 7),
+	(26, 1, 8),
+	(27, 9, 9),
+	(28, 3, 9),
+	(29, 3, 10),
+	(30, 5, 10),
+	(31, 9, 11),
+	(32, 5, 11),
+	(33, 1, 18),
+	(34, 3, 17),
+	(35, 4, 17),
+	(36, 1, 16),
+	(37, 9, 16),
+	(38, 1, 15),
+	(39, 5, 15),
+	(40, 1, 14),
+	(41, 3, 14),
+	(42, 1, 13),
+	(43, 3, 13),
+	(44, 1, 12),
+	(45, 4, 12);
 
--- Listage de la structure de table BREUIL_BENJAMIN_INFO1C_JJB_164_2023. t_avoir_niveau_technique_personne
+-- Listage de la structure de table breuil_benjamin_info1c_jjb_164_2023. t_avoir_niveau_technique_personne
 DROP TABLE IF EXISTS `t_avoir_niveau_technique_personne`;
 CREATE TABLE IF NOT EXISTS `t_avoir_niveau_technique_personne` (
   `id_avoir_niveau_technique_personne` int NOT NULL AUTO_INCREMENT,
@@ -85,9 +116,9 @@ CREATE TABLE IF NOT EXISTS `t_avoir_niveau_technique_personne` (
   PRIMARY KEY (`id_avoir_niveau_technique_personne`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table BREUIL_BENJAMIN_INFO1C_JJB_164_2023.t_avoir_niveau_technique_personne : ~0 rows (environ)
+-- Listage des données de la table breuil_benjamin_info1c_jjb_164_2023.t_avoir_niveau_technique_personne : ~0 rows (environ)
 
--- Listage de la structure de table BREUIL_BENJAMIN_INFO1C_JJB_164_2023. t_categories
+-- Listage de la structure de table breuil_benjamin_info1c_jjb_164_2023. t_categories
 DROP TABLE IF EXISTS `t_categories`;
 CREATE TABLE IF NOT EXISTS `t_categories` (
   `id_categories` int NOT NULL AUTO_INCREMENT,
@@ -95,9 +126,9 @@ CREATE TABLE IF NOT EXISTS `t_categories` (
   PRIMARY KEY (`id_categories`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table BREUIL_BENJAMIN_INFO1C_JJB_164_2023.t_categories : ~0 rows (environ)
+-- Listage des données de la table breuil_benjamin_info1c_jjb_164_2023.t_categories : ~0 rows (environ)
 
--- Listage de la structure de table BREUIL_BENJAMIN_INFO1C_JJB_164_2023. t_echauffement
+-- Listage de la structure de table breuil_benjamin_info1c_jjb_164_2023. t_echauffement
 DROP TABLE IF EXISTS `t_echauffement`;
 CREATE TABLE IF NOT EXISTS `t_echauffement` (
   `id_echauffement` int NOT NULL AUTO_INCREMENT,
@@ -107,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `t_echauffement` (
   PRIMARY KEY (`id_echauffement`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table BREUIL_BENJAMIN_INFO1C_JJB_164_2023.t_echauffement : ~15 rows (environ)
+-- Listage des données de la table breuil_benjamin_info1c_jjb_164_2023.t_echauffement : ~15 rows (environ)
 INSERT INTO `t_echauffement` (`id_echauffement`, `name`, `description`, `temps_moyen`) VALUES
 	(1, 'Jogging', 'Course lente sur place ou en déplacement pour échauffer les muscles et augmenter la circulation sanguine', 10),
 	(2, 'Shrimping', 'Mouvement de reptation sur le dos pour se déplacer rapidement sur le sol', 5),
@@ -125,15 +156,15 @@ INSERT INTO `t_echauffement` (`id_echauffement`, `name`, `description`, `temps_m
 	(14, 'Burpees', 'Exercice cardiovasculaire pour échauffer le corps et renforcer la musculature', 10),
 	(15, 'Jumping rope', 'Exercice cardiovasculaire pour échauffer le corps et améliorer la coordination', 5);
 
--- Listage de la structure de table BREUIL_BENJAMIN_INFO1C_JJB_164_2023. t_email
+-- Listage de la structure de table breuil_benjamin_info1c_jjb_164_2023. t_email
 DROP TABLE IF EXISTS `t_email`;
 CREATE TABLE IF NOT EXISTS `t_email` (
   `id_email` int NOT NULL AUTO_INCREMENT,
   `adresse_email` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_email`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table BREUIL_BENJAMIN_INFO1C_JJB_164_2023.t_email : ~6 rows (environ)
+-- Listage des données de la table breuil_benjamin_info1c_jjb_164_2023.t_email : ~6 rows (environ)
 INSERT INTO `t_email` (`id_email`, `adresse_email`) VALUES
 	(1, 'benjaminbreuil2005@gmail.com'),
 	(2, 'john.doe@example.com'),
@@ -142,7 +173,7 @@ INSERT INTO `t_email` (`id_email`, `adresse_email`) VALUES
 	(5, 'emily.wilson@example.com'),
 	(6, 'david.brown@example.com');
 
--- Listage de la structure de table BREUIL_BENJAMIN_INFO1C_JJB_164_2023. t_niveau
+-- Listage de la structure de table breuil_benjamin_info1c_jjb_164_2023. t_niveau
 DROP TABLE IF EXISTS `t_niveau`;
 CREATE TABLE IF NOT EXISTS `t_niveau` (
   `id_niveau` int NOT NULL AUTO_INCREMENT,
@@ -150,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `t_niveau` (
   PRIMARY KEY (`id_niveau`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table BREUIL_BENJAMIN_INFO1C_JJB_164_2023.t_niveau : ~5 rows (environ)
+-- Listage des données de la table breuil_benjamin_info1c_jjb_164_2023.t_niveau : ~5 rows (environ)
 INSERT INTO `t_niveau` (`id_niveau`, `name_niveau`) VALUES
 	(1, 'white'),
 	(3, 'purple'),
@@ -158,7 +189,7 @@ INSERT INTO `t_niveau` (`id_niveau`, `name_niveau`) VALUES
 	(5, 'black'),
 	(9, 'blue');
 
--- Listage de la structure de table BREUIL_BENJAMIN_INFO1C_JJB_164_2023. t_num_tel
+-- Listage de la structure de table breuil_benjamin_info1c_jjb_164_2023. t_num_tel
 DROP TABLE IF EXISTS `t_num_tel`;
 CREATE TABLE IF NOT EXISTS `t_num_tel` (
   `id_num_tel` int NOT NULL AUTO_INCREMENT,
@@ -166,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `t_num_tel` (
   PRIMARY KEY (`id_num_tel`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table BREUIL_BENJAMIN_INFO1C_JJB_164_2023.t_num_tel : ~6 rows (environ)
+-- Listage des données de la table breuil_benjamin_info1c_jjb_164_2023.t_num_tel : ~6 rows (environ)
 INSERT INTO `t_num_tel` (`id_num_tel`, `num_tel`) VALUES
 	(1, '+41791234567'),
 	(2, '+41782345678'),
@@ -175,7 +206,7 @@ INSERT INTO `t_num_tel` (`id_num_tel`, `num_tel`) VALUES
 	(5, '+41755678901'),
 	(6, '+41746789012');
 
--- Listage de la structure de table BREUIL_BENJAMIN_INFO1C_JJB_164_2023. t_personne
+-- Listage de la structure de table breuil_benjamin_info1c_jjb_164_2023. t_personne
 DROP TABLE IF EXISTS `t_personne`;
 CREATE TABLE IF NOT EXISTS `t_personne` (
   `id_personne` int NOT NULL AUTO_INCREMENT,
@@ -191,29 +222,31 @@ CREATE TABLE IF NOT EXISTS `t_personne` (
   CONSTRAINT `t_personne_ibfk_1` FOREIGN KEY (`fk_email`) REFERENCES `t_email` (`id_email`),
   CONSTRAINT `t_personne_ibfk_2` FOREIGN KEY (`fk_num_tel`) REFERENCES `t_num_tel` (`id_num_tel`),
   CONSTRAINT `t_personne_ibfk_3` FOREIGN KEY (`fk_adresse`) REFERENCES `t_adresse` (`id_adresse`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table BREUIL_BENJAMIN_INFO1C_JJB_164_2023.t_personne : ~7 rows (environ)
+-- Listage des données de la table breuil_benjamin_info1c_jjb_164_2023.t_personne : ~5 rows (environ)
 INSERT INTO `t_personne` (`id_personne`, `prenom`, `nom`, `fk_email`, `fk_num_tel`, `fk_adresse`) VALUES
-	(1, 'Benjamin', 'Breuil', 1, 1, 1),
-	(2, 'Alexandre', 'Breuil', NULL, NULL, NULL),
-	(3, 'ddd', NULL, NULL, NULL, NULL),
-	(4, 'asfasf', NULL, NULL, NULL, NULL),
-	(5, 'fasf', NULL, NULL, NULL, NULL),
-	(6, NULL, 'asfasf', NULL, NULL, NULL),
-	(7, 'rqwr', 'qwrq', NULL, NULL, NULL);
+	(1, 'benjamin', 'breuil', 1, 1, 1),
+	(2, 'alexandre', 'breuil', 3, 1, 3),
+	(9, 'olivier', 'macaud', 5, 1, 1),
+	(10, 'conor', 'mcgregor', 4, 1, 4),
+	(11, 'johnson', 'dwayne', 6, 5, 3);
 
--- Listage de la structure de table BREUIL_BENJAMIN_INFO1C_JJB_164_2023. t_role
+-- Listage de la structure de table breuil_benjamin_info1c_jjb_164_2023. t_role
 DROP TABLE IF EXISTS `t_role`;
 CREATE TABLE IF NOT EXISTS `t_role` (
   `id_role` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_role`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table BREUIL_BENJAMIN_INFO1C_JJB_164_2023.t_role : ~0 rows (environ)
+-- Listage des données de la table breuil_benjamin_info1c_jjb_164_2023.t_role : ~0 rows (environ)
+INSERT INTO `t_role` (`id_role`, `name`) VALUES
+	(1, 'entraineur'),
+	(2, 'eleve'),
+	(3, 'visiteur');
 
--- Listage de la structure de table BREUIL_BENJAMIN_INFO1C_JJB_164_2023. t_technique
+-- Listage de la structure de table breuil_benjamin_info1c_jjb_164_2023. t_technique
 DROP TABLE IF EXISTS `t_technique`;
 CREATE TABLE IF NOT EXISTS `t_technique` (
   `id_technique` int NOT NULL AUTO_INCREMENT,
@@ -222,7 +255,7 @@ CREATE TABLE IF NOT EXISTS `t_technique` (
   PRIMARY KEY (`id_technique`)
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table BREUIL_BENJAMIN_INFO1C_JJB_164_2023.t_technique : ~18 rows (environ)
+-- Listage des données de la table breuil_benjamin_info1c_jjb_164_2023.t_technique : ~18 rows (environ)
 INSERT INTO `t_technique` (`id_technique`, `name`, `description`) VALUES
 	(1, 'Jiu-jitsu basics', 'Ensemble de techniques de base du Jiu-jitsu Brésilien'),
 	(2, 'Guard pass', 'Techniques pour passer la garde de l\'adversaire'),
@@ -243,15 +276,21 @@ INSERT INTO `t_technique` (`id_technique`, `name`, `description`) VALUES
 	(17, 'Mount', 'Le Mount est une position dominante qui consiste à monter sur le torse de l\'adversaire en prenant appui sur ses jambes.'),
 	(18, 'Side control', 'Le Side control est une position dominante qui consiste à se placer sur le côté de l\'adversaire en bloquant ses bras et ses jambes.');
 
--- Listage de la structure de table BREUIL_BENJAMIN_INFO1C_JJB_164_2023. t_zone_echauffer
+-- Listage de la structure de table breuil_benjamin_info1c_jjb_164_2023. t_zone_echauffer
 DROP TABLE IF EXISTS `t_zone_echauffer`;
 CREATE TABLE IF NOT EXISTS `t_zone_echauffer` (
   `id_zone_echauffer` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_zone_echauffer`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table BREUIL_BENJAMIN_INFO1C_JJB_164_2023.t_zone_echauffer : ~0 rows (environ)
+-- Listage des données de la table breuil_benjamin_info1c_jjb_164_2023.t_zone_echauffer : ~0 rows (environ)
+INSERT INTO `t_zone_echauffer` (`id_zone_echauffer`, `name`) VALUES
+	(1, 'bras'),
+	(2, 'coude'),
+	(3, 'nuque'),
+	(4, 'poignet'),
+	(5, 'epaules');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

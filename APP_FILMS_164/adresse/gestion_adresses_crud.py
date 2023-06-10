@@ -234,7 +234,7 @@ def adresse_delete_wtf():
         if request.method == "POST" and form_delete.validate_on_submit():
 
             if form_delete.submit_btn_annuler.data:
-                return redirect(url_for("emails_afficher", order_by="ASC", id_genre_sel=0))
+                return redirect(url_for("adresses_afficher", order_by="ASC", id_genre_sel=0))
 
             if form_delete.submit_btn_conf_del.data:
                 # Récupère les données afin d'afficher à nouveau
@@ -251,11 +251,11 @@ def adresse_delete_wtf():
                 valeur_delete_dictionnaire = {"value_id_genre": id_genre_delete}
                 print("valeur_delete_dictionnaire ", valeur_delete_dictionnaire)
 
-                str_sql_delete_personnes = "UPDATE t_personne SET fk_email = NULL WHERE fk_email = %(value_id_genre)s"
+                str_sql_delete_personnes = "UPDATE t_personne SET fk_adresse = NULL WHERE fk_adresse = %(value_id_genre)s"
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(str_sql_delete_personnes, valeur_delete_dictionnaire)
 
-                str_sql_delete_idgenre = """DELETE FROM t_email WHERE id_email = %(value_id_genre)s"""
+                str_sql_delete_idgenre = """DELETE FROM t_adresse WHERE id_adresse = %(value_id_genre)s"""
                 # Manière brutale d'effacer d'abord la "fk_genre", même si elle n'existe pas dans la "t_genre_film"
                 # Ensuite on peut effacer le genre vu qu'il n'est plus "lié" (INNODB) dans la "t_genre_film"
                 with DBconnection() as mconn_bd:
@@ -266,14 +266,14 @@ def adresse_delete_wtf():
                 print(f"Genre définitivement effacé !!")
 
                 # afficher les données
-                return redirect(url_for('emails_afficher', order_by="ASC", id_genre_sel=0))
+                return redirect(url_for('adresses_afficher', order_by="ASC", id_genre_sel=0))
 
         if request.method == "GET":
             valeur_select_dictionnaire = {"value_id_genre": id_genre_delete}
             print(id_genre_delete, type(id_genre_delete))
 
             # Requête qui affiche tous les films_genres qui ont le genre que l'utilisateur veut effacer
-            str_sql_genres_films_delete = """SELECT id_email, adresse_email FROM t_email WHERE id_email = %(value_id_genre)s"""
+            str_sql_genres_films_delete = """SELECT id_adresse, rue FROM t_adresse WHERE id_adresse = %(value_id_genre)s"""
 
             with DBconnection() as mydb_conn:
                 mydb_conn.execute(str_sql_genres_films_delete, valeur_select_dictionnaire)
@@ -285,7 +285,7 @@ def adresse_delete_wtf():
                 session['data_films_attribue_genre_delete'] = data_films_attribue_genre_delete
 
                 # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
-                str_sql_id_genre = "SELECT id_email, adresse_email FROM t_email WHERE id_email = %(value_id_genre)s"
+                str_sql_id_genre = "SELECT id_adresse, rue FROM t_adresse WHERE id_adresse = %(value_id_genre)s"
 
                 mydb_conn.execute(str_sql_id_genre, valeur_select_dictionnaire)
                 # Une seule valeur est suffisante "fetchone()",
@@ -293,7 +293,7 @@ def adresse_delete_wtf():
                 data_nom_genre = mydb_conn.fetchone()
             # Afficher la valeur sélectionnée dans le champ du formulaire "genre_delete_wtf.html"
                 if data_nom_genre is not None:
-                    form_delete.nom_genre_delete_wtf.data = data_nom_genre["adresse_email"]
+                    form_delete.nom_genre_delete_wtf.data = data_nom_genre["rue"]
 
             # Le bouton pour l'action "DELETE" dans le form. "genre_delete_wtf.html" est caché.
             btn_submit_del = False
