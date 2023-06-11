@@ -10,10 +10,15 @@ Le "début de la fin"
     git clone git@github.com:benjamin-breuil/BREUIL_BENJAMIN_INFO1C_164_2023.git
 ```
 
-2. lancer dans le dossier database -> 1_ImportationDumpSql.py
+2. faire la commande
+```shell
+pip install -r requirements.txt
+```
+
+3. lancer dans le dossier database -> 1_ImportationDumpSql.py
 
 
-3. lancer run_mon_app.py
+4. lancer run_mon_app.py
 
 Le mode d'emploi et vos devoirs se trouvent à l'adresse suivante.
 
